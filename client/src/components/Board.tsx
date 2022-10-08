@@ -58,7 +58,6 @@ export const Board: React.FC<BoardProps> = ({ sideMenuToggle, sideMenuOpen }) =>
   useEffect(() => {
     getColumns()
       .then(data => {
-        console.log(data);
         setColumns(data);
       });
   }, []);
@@ -66,7 +65,6 @@ export const Board: React.FC<BoardProps> = ({ sideMenuToggle, sideMenuOpen }) =>
   useEffect(() => {
     getColumns()
       .then(data => {
-        console.log(data);
         setColumns(data);
       });
   }, [tasks])
