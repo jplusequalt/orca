@@ -4,9 +4,10 @@ import { theme } from '../Theme';
 export const TaskCard = styled(Box)(({ theme }) => ({
   borderRadius: '8px', 
   backgroundColor: theme.palette.background.paper,
-  width: '100%',
+  width: '95%',
   padding: '1rem',
-  height: 'auto'
+  height: 'auto',
+  marginBottom: '0.5rem'
 }));
 
 export const AssigneeAvatarPreview = styled(Avatar)({

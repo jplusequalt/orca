@@ -1,7 +1,7 @@
 import { KanbanBoard, KanbanColumn, KanbanHeader, KanbanRowHeader, KanbanWrapper, ToggleSideMenu, ToggleSideMenuIcon } from '../styles/Board.styled';
 import React, { SetStateAction, Dispatch, useState, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
-import { Box, Grid, Typography, Fab, Popover } from '@mui/material';
+import { Box, Autocomplete, TextField, Typography, Fab, Popover } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
 import AddIcon from '@mui/icons-material/Add';
 import { theme } from '../Theme';
@@ -147,7 +147,41 @@ export const Board: React.FC<BoardProps> = ({ sideMenuToggle, sideMenuOpen }) =>
         </ToggleSideMenu>
         <Box>
           <KanbanHeader>
-            <Typography variant='h4'>Board name</Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '1rem' }}>
+              <Typography variant='h4'>Board name</Typography>
+              <Autocomplete 
+                freeSolo
+                sx={{ width: '250px' }}
+                options={['Person 1', 'Person 2', 'Person 3']}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    sx={{
+                      '& label.Mui-focused': {
+                        color: 'white',
+                      },
+                      '& .MuiInput-underline:after': {
+                        borderBottomColor: 'white',
+                      },
+                      '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: 'transparent',
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: 'white',
+                        },
+                      }
+                    }}
+                    color='primary'
+                    label="Search for tasks"
+                    InputProps={{
+                      ...params.InputProps,
+                      type: 'search',
+                    }}
+                  />
+                )}
+              />
+            </Box>
             <Fab 
               variant='extended' 
               sx={{

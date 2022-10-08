@@ -22,7 +22,7 @@ export const TaskPreview: React.FC<TaskPreviewProps> = ({ contents }) => {
             <Typography sx={{ color: theme.palette.text.secondary }} variant='subtitle2'>0 of 2</Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Typography sx={{ color: theme.palette.text.secondary }} variant='subtitle2'>I3CG-220</Typography>
+            <Typography sx={{ color: theme.palette.text.secondary }} variant='subtitle2'>{ contents.tag }</Typography>
             <AssigneeAvatarPreview />
           </Box>
         </Box>
