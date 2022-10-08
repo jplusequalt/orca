@@ -63,6 +63,8 @@ export const Board: React.FC<BoardProps> = ({ sideMenuToggle, sideMenuOpen }) =>
   }, []);
 
   useEffect(() => {
+    console.log('re-render!');
+    
     getColumns()
       .then(data => {
         setColumns(data);

@@ -15,7 +15,7 @@ export const TaskPreview: React.FC<TaskPreviewProps> = ({ contents }) => {
 
   return (
     <>
-      <TaskCard>
+      <TaskCard onClick={() => setOpen(true)}>
         <Typography sx={{ wordBreak: 'break-word' }} variant='body1'>{ contents.title }</Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem', mt: 1, width: '100%' }}>
           <Box>

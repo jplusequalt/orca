@@ -7,6 +7,7 @@ import { Assignee, AssigneeAvatar, IconBox, TaskStatus } from '../styles/TaskMod
 import { theme } from '../Theme';
 import { Task } from '../model/Task';
 import { useTasks } from '../hooks/useTasks';
+import { updateTask } from '../services/columns';
 
 type TaskModalProps = {
   contents: Task,
@@ -23,13 +24,13 @@ export const TaskModal: React.FC<TaskModalProps> = ({ contents, open, handleOpen
   const handleTaskChange = (event: SelectChangeEvent) => {
     setTaskStatus(event.target.value);
 
-    let temp = new Task(
-      contents.title, 
-      contents.description, 
-      contents.tag, 
-      event.target.value, 
-      contents.assignee
-    );
+    let temp = {
+      ...contents,
+      status: event.target.value
+    } as Task;
+      
+    updateTask(temp)
+      .then(res => console.log(res));
 
     setTasks(tasks.filter((task: Task) => task.tag !== contents.tag).concat(temp));
   }
@@ -37,13 +38,13 @@ export const TaskModal: React.FC<TaskModalProps> = ({ contents, open, handleOpen
   const handleAssigneeChange = (event: SelectChangeEvent) => {
     setAssignee(event.target.value);
 
-    let temp = new Task(
-      contents.title, 
-      contents.description, 
-      contents.tag, 
-      contents.status,
-      event.target.value 
-    );
+    let temp = {
+      ...contents,
+      assignee: event.target.value
+    } as Task;
+
+    updateTask(temp)
+      .then(res => console.log(res));
 
     setTasks(tasks.filter((task: Task) => task.tag !== contents.tag).concat(temp));
   }
