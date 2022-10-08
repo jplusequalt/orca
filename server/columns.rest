@@ -1,0 +1,25 @@
+POST http://localhost:8080/api/columns/ HTTP/1.1
+content-type: application/json
+
+{
+  "title": "Test",
+  "description": "This is a test",
+  "assignee": "Person 1",
+  "status": "In Progress",
+  "tag": "123"
+}
+
+###
+GET http://localhost:8080/api/columns/
+
+###
+PUT http://localhost:8080/api/tasks/63409d589896e24e48faabed HTTP/1.1
+content-type: application/json
+
+{
+  "title": "Updated task again",
+  "description": "This is a test to see if the task is being updated",
+  "assignee": "Person 1",
+  "status": "In Progress",
+  "tag": "123"
+}
