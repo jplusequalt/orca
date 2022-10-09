@@ -1,5 +1,5 @@
 import { KanbanBoard, KanbanColumn, KanbanHeader, KanbanRowHeader, KanbanWrapper, ToggleSideMenu, ToggleSideMenuIcon } from '../styles/Board.styled';
-import React, { SetStateAction, Dispatch, useState, useEffect } from 'react';
+import React, { SetStateAction, Dispatch, useState, useEffect, ChangeEvent } from 'react';
 import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
 import { Box, Autocomplete, TextField, Typography, Fab, Popover } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
@@ -9,7 +9,7 @@ import { TaskPreview } from './TaskPreview';
 import { AddTask } from './AddTask';
 import { Task } from '../model/Task';
 import { useTasks } from '../hooks/useTasks';
-import { v4 as uuid } from 'uuid';
+import ClearIcon from '@mui/icons-material/Clear';
 import { getColumns, updateTask } from '../services/columns';
 
 export type BoardProps = {
@@ -37,8 +37,18 @@ export const Board: React.FC<BoardProps> = ({ sideMenuToggle, sideMenuOpen }) =>
 
   const { tasks, setTasks } = useTasks();
 
+  const [filter, setFilter] = useState<string>('');
+
+  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+    setFilter(event.target.value);
+  }
+
   const displayTasks = (items: Task[]) => {
     return items.map((task, index) => {
+      if (filter !== '' && !task.title.toLocaleLowerCase().includes(filter)) {
+        return null;
+      }
+
       return <Draggable key={task.id} draggableId={task.id} index={index}>
         {(provided) => {
           return <Box ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
@@ -60,17 +70,8 @@ export const Board: React.FC<BoardProps> = ({ sideMenuToggle, sideMenuOpen }) =>
       .then(data => {
         setColumns(data);
       });
-  }, []);
+  }, [tasks]);
 
-  useEffect(() => {
-    console.log('re-render!');
-    
-    getColumns()
-      .then(data => {
-        setColumns(data);
-      });
-  }, [tasks])
-  
   const handleDragEnd = (result: DropResult) => {
     if (!result.destination) return;
     
@@ -88,8 +89,7 @@ export const Board: React.FC<BoardProps> = ({ sideMenuToggle, sideMenuOpen }) =>
         status: destination.droppableId
       } as Task;
 
-      updateTask(updatedTask)
-        .then(res => console.log(res));
+      updateTask(updatedTask);
 
       setColumns({
         ...columns,
@@ -148,39 +148,41 @@ export const Board: React.FC<BoardProps> = ({ sideMenuToggle, sideMenuOpen }) =>
         <Box>
           <KanbanHeader>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '1rem' }}>
-              <Typography variant='h4'>Board name</Typography>
-              <Autocomplete 
-                freeSolo
-                sx={{ width: '250px' }}
-                options={['Person 1', 'Person 2', 'Person 3']}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    sx={{
-                      '& label.Mui-focused': {
-                        color: 'white',
+              <Typography 
+                variant='h4'
+                sx={{
+                  [theme.breakpoints.down('md')]: {
+                    fontSize: '1.5rem'
+                  }
+                }}>Board name</Typography>
+                <TextField
+                  sx={{
+                    [theme.breakpoints.down('md')]: {
+                      width: '200px'
+                    },
+                    '& label.Mui-focused': {
+                      color: 'white',
+                    },
+                    '& .MuiInput-underline:after': {
+                      borderBottomColor: 'white',
+                    },
+                    '& .MuiOutlinedInput-root': {
+                      '& fieldset': {
+                        borderColor: 'transparent',
                       },
-                      '& .MuiInput-underline:after': {
-                        borderBottomColor: 'white',
+                      '&.Mui-focused fieldset': {
+                        borderColor: 'white',
                       },
-                      '& .MuiOutlinedInput-root': {
-                        '& fieldset': {
-                          borderColor: 'transparent',
-                        },
-                        '&.Mui-focused fieldset': {
-                          borderColor: 'white',
-                        },
-                      }
-                    }}
-                    color='primary'
-                    label="Search for tasks"
-                    InputProps={{
-                      ...params.InputProps,
-                      type: 'search',
-                    }}
-                  />
-                )}
-              />
+                    }
+                  }}
+                  color='primary'
+                  label="Search for tasks"
+                  value={filter}
+                  onChange={handleSearch}
+                />
+                {
+                  filter !== '' && <ClearIcon sx={{ '&:hover': { filter: 'brightness(0.8)' } }} onClick={() => setFilter('')} />
+                }
             </Box>
             <Fab 
               variant='extended' 
