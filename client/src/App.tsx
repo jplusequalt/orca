@@ -10,5 +10,5 @@ export const App: React.FC = () => {
       <Navbar />
       <Main />
     </Box>
-  )
+  );
 }

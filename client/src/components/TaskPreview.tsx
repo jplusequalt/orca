@@ -6,10 +6,11 @@ import { theme } from '../Theme';
 import { Task } from '../model/Task';
 
 type TaskPreviewProps = {
-  contents: Task
+  contents: Task,
+  users: string[]
 }
 
-export const TaskPreview: React.FC<TaskPreviewProps> = ({ contents }) => {
+export const TaskPreview: React.FC<TaskPreviewProps> = ({ contents, users }) => {
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -27,7 +28,7 @@ export const TaskPreview: React.FC<TaskPreviewProps> = ({ contents }) => {
           </Box>
         </Box>
       </TaskCard>
-      <TaskModal contents={contents} open={open} handleOpen={setOpen} />
+      <TaskModal contents={contents} users={users} open={open} handleOpen={setOpen} />
     </>
   );
 }

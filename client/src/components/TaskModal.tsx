@@ -12,10 +12,11 @@ import { updateTask } from '../services/columns';
 type TaskModalProps = {
   contents: Task,
   open: boolean,
+  users: string[],
   handleOpen: Dispatch<SetStateAction<boolean>>
 }
 
-export const TaskModal: React.FC<TaskModalProps> = ({ contents, open, handleOpen }) => {
+export const TaskModal: React.FC<TaskModalProps> = ({ contents, open, users, handleOpen }) => {
 
   const { tasks, setTasks } = useTasks();
   const [taskStatus, setTaskStatus] = useState<string>(contents.status);
@@ -114,19 +115,16 @@ export const TaskModal: React.FC<TaskModalProps> = ({ contents, open, handleOpen
                     input={<Assignee />}
                     inputProps={{ 'aria-label': 'Without label' }}
                   >
-                    <MenuItem value='Person 1' sx={{ display: 'flex', gap: '1rem' }}>
+                  <MenuItem value="">
+                    <em>Unassigned</em>
+                  </MenuItem>
+                  {users.map(user => 
+                    <MenuItem key={user} value={user} sx={{ display: 'flex', gap: '1rem' }}>
                       <AssigneeAvatar />
-                      Person 1
+                      {user}
                     </MenuItem>
-                    <MenuItem value='Person 2' sx={{ display: 'flex', gap: '1rem'}}>
-                      <AssigneeAvatar />
-                      Person 2
-                    </MenuItem>
-                    <MenuItem value='Person 3' sx={{ display: 'flex', gap: '1rem'}}>
-                     <AssigneeAvatar />
-                      Person 3
-                    </MenuItem>
-                  </Select>
+                  )}
+                 </Select>
                 </FormControl>
               </Box>
               <Typography variant='subtitle1' sx={{ color: theme.palette.text.secondary }}>Description</Typography>

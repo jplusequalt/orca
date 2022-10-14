@@ -12,7 +12,7 @@ export const TaskContext = createContext<TaskContextContent>({
 });
 
 type TaskProviderProps = {
-  children: JSX.Element
+  children: JSX.Element | null
 }
 
 export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {

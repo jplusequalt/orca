@@ -2,10 +2,12 @@ import { ReactElement } from 'react';
 
 export class BoardModel {
   name: string;
-  element: ReactElement;
+  tag: string;
+  users: string[];
 
-  constructor(name: string, element: ReactElement) {
+  constructor(name: string, tag: string, users: string[]) {
     this.name = name;
-    this.element = element;
+    this.tag = tag;
+    this.users = users;
   }
 }

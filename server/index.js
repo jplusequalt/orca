@@ -1,15 +1,23 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const Task = require("./tasks");
+const mongoose = require("mongoose");
+const Board = require("./model/board");
+const Task = require("./model/tasks");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-let taskHeaders = ['Todo', 'Blocked', 'In Progress', 'Completed', 'Backlog'];
+const url = process.env.MONGODB_URI;
+console.log(`Connecting to ${url}`);
 
-const buildColumns = tasks => {
+mongoose.connect(url)
+  .then(_ => console.log('Connected to MongoDB'))
+  .catch(error => console.log('error connecting to MongoDb: ', error));
+  
+const buildBoard = tasks => {
+  let taskHeaders = ['Todo', 'Blocked', 'In Progress', 'Completed', 'Backlog'];
   let columns = taskHeaders.reduce((obj, keys) => (obj[keys] = [], obj), {});
   return tasks.reduce((cols, task) => {
     if (taskHeaders.includes(task.status)) {
@@ -19,18 +27,40 @@ const buildColumns = tasks => {
   }, columns);
 }
 
-app.get('/api/columns', (req, res) => {
-  Task.find({}).then(tasks => {
-    let cols = buildColumns(tasks);
+app.get('/api/boards', (req, res) => {
+  Board.find({}).then(boards => {
+    let boardTags = boards.map(board => board);
+    return res.json(boardTags);
+  });
+});
+
+app.post('/api/boards', (req, res, next) => {
+  let body = req.body;
+
+  let board = new Board({
+    name: body.name,
+    users: body.users,
+    tag: body.tag
+  });
+
+  board.save().then(_ => {
+    return res.status(204).send('Successful');
+  }).catch(err => next(err));
+});
+
+app.get('/api/board/:tag', (req, res) => {
+  let boardTag = req.params.tag;
+  Task.find({ board: boardTag }).then(tasks => {
+    let cols = buildBoard(tasks);
     return res.json(cols);
   });
 });
 
 app.post('/api/tasks', (req, res, next) => {
   const body = req.body;
-  console.log(body);
 
   const task = new Task({
+    board: body.board,
     title: body.title,
     description: body.description,
     assignee: body.assignee,

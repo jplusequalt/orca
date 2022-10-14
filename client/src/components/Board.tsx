@@ -1,7 +1,7 @@
 import { KanbanBoard, KanbanColumn, KanbanHeader, KanbanRowHeader, KanbanWrapper, ToggleSideMenu, ToggleSideMenuIcon } from '../styles/Board.styled';
 import React, { SetStateAction, Dispatch, useState, useEffect, ChangeEvent } from 'react';
 import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
-import { Box, Autocomplete, TextField, Typography, Fab, Popover } from '@mui/material';
+import { Box, TextField, Typography, Fab, Popover } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
 import AddIcon from '@mui/icons-material/Add';
 import { theme } from '../Theme';
@@ -10,18 +10,21 @@ import { AddTask } from './AddTask';
 import { Task } from '../model/Task';
 import { useTasks } from '../hooks/useTasks';
 import ClearIcon from '@mui/icons-material/Clear';
-import { getColumns, updateTask } from '../services/columns';
+import { updateTask } from '../services/columns';
+import { BoardModel } from '../model/BoardModel';
+import { getColumns } from '../services/boards';
 
 export type BoardProps = {
   sideMenuToggle: Dispatch<SetStateAction<boolean>>,
-  sideMenuOpen: boolean
+  sideMenuOpen: boolean,
+  boardInfo: BoardModel
 }
 
 type ColumnsType = {
   [key: string]: Task[]
 }
 
-export const Board: React.FC<BoardProps> = ({ sideMenuToggle, sideMenuOpen }) => {
+export const Board: React.FC<BoardProps> = ({ sideMenuToggle, sideMenuOpen, boardInfo }) => {
   
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [newTask, setNewTask] = useState<boolean>(false);
@@ -52,7 +55,7 @@ export const Board: React.FC<BoardProps> = ({ sideMenuToggle, sideMenuOpen }) =>
       return <Draggable key={task.id} draggableId={task.id} index={index}>
         {(provided) => {
           return <Box ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-            <TaskPreview contents={task} />
+            <TaskPreview contents={task} users={boardInfo.users} />
           </Box>
         }}
       </Draggable>
@@ -66,7 +69,7 @@ export const Board: React.FC<BoardProps> = ({ sideMenuToggle, sideMenuOpen }) =>
   const [columns, setColumns] = useState<ColumnsType>({});
 
   useEffect(() => {
-    getColumns()
+    getColumns(boardInfo.tag)
       .then(data => {
         setColumns(data);
       });
@@ -154,7 +157,7 @@ export const Board: React.FC<BoardProps> = ({ sideMenuToggle, sideMenuOpen }) =>
                   [theme.breakpoints.down('md')]: {
                     fontSize: '1.5rem'
                   }
-                }}>Board name</Typography>
+                }}>{ boardInfo.name }</Typography>
                 <TextField
                   sx={{
                     [theme.breakpoints.down('md')]: {
@@ -228,7 +231,7 @@ export const Board: React.FC<BoardProps> = ({ sideMenuToggle, sideMenuOpen }) =>
         </DragDropContext>
         </KanbanBoard>
       </KanbanWrapper>
-      { newTask && <AddTask open={newTask} handleOpen={setNewTask} handleNewTask={handleNewTask} /> }
+      { newTask && <AddTask open={newTask} users={boardInfo.users} boardTag={boardInfo.tag} handleOpen={setNewTask} handleNewTask={handleNewTask} /> }
     </Box>
   );
 }
