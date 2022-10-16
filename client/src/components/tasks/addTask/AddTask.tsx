@@ -29,7 +29,7 @@ export const AddTask: React.FC<AddTaskProps> = ({ open, users, boardTag, handleO
   const onSubmit: SubmitHandler<FormInput> = (data: any) => {
     console.log(data);
     
-    let newTask = new Task(boardTag, data.title, data.description, '123', data.status, data.assignee);
+    let newTask = new Task(boardTag, data.title, data.description, boardTag, data.status, data.assignee);
     addTask(newTask)
       .then(res => {
         console.log(res)

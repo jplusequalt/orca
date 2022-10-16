@@ -13,10 +13,11 @@ const drawerWidth = 200;
 type SideMenuProps = {
   visible: boolean,
   boards: string[],
+  selected: string,
   handleSelect: (name: string) => void
 }
 
-export const SideMenu: React.FC<SideMenuProps> = ({ visible, boards, handleSelect }) => {
+export const SideMenu: React.FC<SideMenuProps> = ({ visible, boards, selected, handleSelect }) => {
 
   return (
     <BoardMenuList
@@ -28,30 +29,40 @@ export const SideMenu: React.FC<SideMenuProps> = ({ visible, boards, handleSelec
       <Box sx={{ height: '5.5rem' }} />
       <List>
         {boards.map(board => 
-          <ListItem key={board} 
+          <ListItem key={board}
+          
             sx={{
               '&:hover': {
-                  backgroundColor: '#232c3a'
-                }
+                backgroundColor: selected !== board ? '#232c3a' : theme.palette.background.paper
+              },
+              paddingLeft: 0
             }}
             onClick={() => handleSelect(board)}
             >
-            <ListItemButton
-              sx={{
-                '&:hover': {
-                  backgroundColor: 'transparent'
-                }
-              }}>
-              <ListItemIcon 
-                sx={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: '1rem'
-                  }} >
-                <ViewColumnIcon sx={{ fill: theme.palette.text.primary }} />
-                <ListItemText primary={board} sx={{ color: theme.palette.text.primary }} />
-              </ListItemIcon>
-            </ListItemButton>
+            <Box sx={{ 
+              backgroundColor: selected === board ? '#701b92' : 'transparent', 
+              borderRadius: '50px', 
+              marginLeft: '-20px', 
+              width: '105%' }}>
+              <ListItemButton
+                disableRipple
+                sx={{
+                  '&:hover': {
+                    backgroundColor: 'transparent'
+                  }
+                }}>
+                <ListItemIcon 
+                  sx={{
+                    paddingLeft: '20px', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '0.5rem'
+                    }} >
+                  <ViewColumnIcon sx={{ fill: theme.palette.text.primary }} />
+                  <ListItemText primary={board} sx={{ color: theme.palette.text.primary }} />
+                </ListItemIcon>
+              </ListItemButton>
+            </Box>
           </ListItem>
         )}
       </List>

@@ -31,7 +31,7 @@ export const Main = () => {
       sx={{ 
         display: 'flex'
     }}>
-      <SideMenu visible={sideMenuOpen} boards={boards.map(board => board.name)} handleSelect={selectBoard} />
+      <SideMenu visible={sideMenuOpen} boards={boards.map(board => board.name)} selected={board.name} handleSelect={selectBoard} />
       <TaskProvider>
         <Board sideMenuToggle={setSideMenuOpen} sideMenuOpen={sideMenuOpen} boardInfo={board && board} />
       </TaskProvider>
