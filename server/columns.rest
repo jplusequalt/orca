@@ -30,9 +30,9 @@ POST http://localhost:8080/api/boards/ HTTP/1.1
 content-type: application/json
 
 {
-  "name": "Test board",
+  "name": "Another board",
   "users": ["JT", "Lily", "Patrick"],
-  "tag": "123"
+  "tag": "456"
 }
 
 ###

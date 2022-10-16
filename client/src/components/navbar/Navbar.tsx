@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Nav, NavbarItem, LogoText, LogoIcon } from './Navbar.styled';
 import { Avatar, Typography, Menu, MenuItem } from '@mui/material';
-import { ReactComponent as Orca } from '../svg/orca.svg';
+import { ReactComponent as Orca } from '../../svg/orca.svg';
 
 export const Navbar = () => {
 

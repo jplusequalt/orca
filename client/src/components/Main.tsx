@@ -9,23 +9,31 @@ import { BoardModel } from '../model/BoardModel'
 export const Main = () => {
 
   const [sideMenuOpen, setSideMenuOpen] = useState(true);
-  const [boards, setBoards] = useState<BoardModel[] | null>(null);
+  const [boards, setBoards] = useState<BoardModel[]>([]);
+  const [board, setBoard] = useState<BoardModel>({} as BoardModel);
 
   useEffect(() => {
     getBoards()
-      .then(boards =>
-        setBoards(boards.map((board: any) => 
-          new BoardModel(board.name, board.tag, board.users))));
+      .then(res => {
+        let b = res.map((board: any) => 
+          new BoardModel(board.name, board.tag, board.users));
+        setBoards(b);
+        setBoard(b[0]);
+      });
   }, []);
+
+  const selectBoard = (name: string) => {
+    setBoard(boards.find(board => board.name === name) ?? boards[0]);
+  }
 
   return (
     <Box 
       sx={{ 
         display: 'flex'
     }}>
-      <SideMenu visible={sideMenuOpen} />
+      <SideMenu visible={sideMenuOpen} boards={boards.map(board => board.name)} handleSelect={selectBoard} />
       <TaskProvider>
-        { boards && <Board sideMenuToggle={setSideMenuOpen} sideMenuOpen={sideMenuOpen} boardInfo={boards && boards[0]} /> }
+        <Board sideMenuToggle={setSideMenuOpen} sideMenuOpen={sideMenuOpen} boardInfo={board && board} />
       </TaskProvider>
     </Box>
   )

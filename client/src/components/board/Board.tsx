@@ -65,15 +65,17 @@ export const Board: React.FC<BoardProps> = ({ sideMenuToggle, sideMenuOpen, boar
   const handleNewTask = (newTask: Task) => {
     setTasks(tasks.concat(newTask));
   }
-
+  
   const [columns, setColumns] = useState<ColumnsType>({});
 
   useEffect(() => {
+    console.log('rerender');
+    
     getColumns(boardInfo.tag)
       .then(data => {
         setColumns(data);
       });
-  }, [tasks]);
+  }, [tasks, boardInfo]);
 
   const handleDragEnd = (result: DropResult) => {
     if (!result.destination) return;
@@ -108,6 +110,15 @@ export const Board: React.FC<BoardProps> = ({ sideMenuToggle, sideMenuOpen, boar
         ...columns,
         [source.droppableId]: copiedItems
       });
+    }
+  }
+
+  const getRowHeader = (name: string) => {
+    switch (name) {
+      case 'Todo': return '#3ecffc';
+      case 'Blocked': return '#ff3939';
+      case 'In Progress': return '#c42fff';
+      case 'Completed': return '#57ff35'
     }
   }
   
@@ -210,7 +221,7 @@ export const Board: React.FC<BoardProps> = ({ sideMenuToggle, sideMenuOpen, boar
               return <KanbanColumn key={name}>
                 <Box>
                   <KanbanRowHeader>
-                    <CircleIcon sx={{ fill: '#3ecffc', width: '1rem' }} />
+                    <CircleIcon sx={{ fill: getRowHeader(name), width: '1rem' }} />
                     { name }
                   </KanbanRowHeader>
                 </Box>

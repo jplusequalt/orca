@@ -11,10 +11,12 @@ import { BoardMenuList } from './SideMenu.styled';
 const drawerWidth = 200;
 
 type SideMenuProps = {
-  visible: boolean
+  visible: boolean,
+  boards: string[],
+  handleSelect: (name: string) => void
 }
 
-export const SideMenu: React.FC<SideMenuProps> = ({ visible }) => {
+export const SideMenu: React.FC<SideMenuProps> = ({ visible, boards, handleSelect }) => {
 
   return (
     <BoardMenuList
@@ -25,13 +27,15 @@ export const SideMenu: React.FC<SideMenuProps> = ({ visible }) => {
     >
       <Box sx={{ height: '5.5rem' }} />
       <List>
-        {['Board 1', 'Board 2', 'Board 3'].map(board => 
+        {boards.map(board => 
           <ListItem key={board} 
             sx={{
               '&:hover': {
                   backgroundColor: '#232c3a'
                 }
-            }}>
+            }}
+            onClick={() => handleSelect(board)}
+            >
             <ListItemButton
               sx={{
                 '&:hover': {
