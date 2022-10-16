@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction, useState, ChangeEvent } from 'react';
 import { Modal, Box, Select, Button, Typography, MenuItem, SelectChangeEvent } from '@mui/material';
-import { theme } from '../Theme';
-import { TaskInput } from '../styles/AddTask.styled';
-import { Assignee, AssigneeAvatar, TaskStatus } from '../styles/TaskModal.styled';
-import { Task } from '../model/Task';
-import { addTask } from '../services/columns';
+import { theme } from '../../../Theme';
+import { TaskInput } from './AddTask.styled';
+import { Assignee, AssigneeAvatar, TaskStatus } from '../taskModal/TaskModal.styled';
+import { Task } from '../../../model/Task';
+import { addTask } from '../../../services/columns';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 type AddTaskProps = {

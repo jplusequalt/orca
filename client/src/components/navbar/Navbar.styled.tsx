@@ -1,6 +1,6 @@
 import { AppBar, Typography, Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { theme } from "../Theme";
+import { theme } from "../../Theme";
 
 export const Nav = styled(AppBar)(({ theme }) => ({
   position: 'fixed',

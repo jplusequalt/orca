@@ -1,12 +1,12 @@
 import { Box } from '@mui/material';
-import { theme } from '../Theme';
+import { theme } from '../../Theme';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ViewColumnIcon from '@mui/icons-material/ViewColumn';
-import { BoardMenuList } from '../styles/SideMenu.styled';
+import { BoardMenuList } from './SideMenu.styled';
 
 const drawerWidth = 200;
 

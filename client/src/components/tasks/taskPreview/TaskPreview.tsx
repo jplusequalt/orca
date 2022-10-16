@@ -1,9 +1,9 @@
 import{ useState } from 'react';
 import { Typography, Box } from '@mui/material';
-import { AssigneeAvatarPreview, TaskCard } from '../styles/TaskPreview.styled';
-import { TaskModal } from './TaskModal';
-import { theme } from '../Theme';
-import { Task } from '../model/Task';
+import { AssigneeAvatarPreview, TaskCard } from './TaskPreview.styled';
+import { TaskModal } from '../taskModal/TaskModal';
+import { theme } from '../../../Theme';
+import { Task } from '../../../model/Task';
 
 type TaskPreviewProps = {
   contents: Task,

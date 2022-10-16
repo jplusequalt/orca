@@ -1,6 +1,6 @@
 import ChevronLeft from "@mui/icons-material/ChevronLeft";
 import { Box, Fab, styled, Stack } from "@mui/material";
-import { theme } from "../Theme";
+import { theme } from "../../Theme";
 
 export const KanbanWrapper = styled('div', { shouldForwardProp: (prop) => prop !== 'open' })<{
   open?: boolean;

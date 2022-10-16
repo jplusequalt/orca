@@ -2,11 +2,11 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Box, Stack, Modal, Typography, FormControl, Select, MenuItem, SelectChangeEvent, Dialog, Button } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ClearIcon from '@mui/icons-material/Clear';
-import { Assignee, AssigneeAvatar, IconBox, TaskStatus } from '../styles/TaskModal.styled';
-import { theme } from '../Theme';
-import { Task } from '../model/Task';
-import { useTasks } from '../hooks/useTasks';
-import { removeTask, updateTask } from '../services/columns';
+import { Assignee, AssigneeAvatar, IconBox, TaskStatus } from './TaskModal.styled';
+import { theme } from '../../../Theme';
+import { Task } from '../../../model/Task';
+import { useTasks } from '../../../hooks/useTasks';
+import { removeTask, updateTask } from '../../../services/columns';
 
 type TaskModalProps = {
   contents: Task,

@@ -1,18 +1,18 @@
-import { KanbanBoard, KanbanColumn, KanbanHeader, KanbanRowHeader, KanbanWrapper, ToggleSideMenu, ToggleSideMenuIcon } from '../styles/Board.styled';
+import { KanbanBoard, KanbanColumn, KanbanHeader, KanbanRowHeader, KanbanWrapper, ToggleSideMenu, ToggleSideMenuIcon } from './Board.styled';
 import React, { SetStateAction, Dispatch, useState, useEffect, ChangeEvent } from 'react';
 import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
 import { Box, TextField, Typography, Fab, Popover } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
 import AddIcon from '@mui/icons-material/Add';
-import { theme } from '../Theme';
-import { TaskPreview } from './TaskPreview';
-import { AddTask } from './AddTask';
-import { Task } from '../model/Task';
-import { useTasks } from '../hooks/useTasks';
+import { theme } from '../../Theme';
+import { TaskPreview } from '../tasks/taskPreview/TaskPreview';
+import { AddTask } from '../tasks/addTask/AddTask';
+import { Task } from '../../model/Task';
+import { useTasks } from '../../hooks/useTasks';
 import ClearIcon from '@mui/icons-material/Clear';
-import { updateTask } from '../services/columns';
-import { BoardModel } from '../model/BoardModel';
-import { getColumns } from '../services/boards';
+import { updateTask } from '../../services/columns';
+import { BoardModel } from '../../model/BoardModel';
+import { getColumns } from '../../services/boards';
 
 export type BoardProps = {
   sideMenuToggle: Dispatch<SetStateAction<boolean>>,

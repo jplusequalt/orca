@@ -1,8 +1,8 @@
 import { Box } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { Board } from './Board'
+import { Board } from './board/Board'
 import { TaskProvider } from '../context/TaskProvider'
-import { SideMenu } from './SideMenu'
+import { SideMenu } from './sidemenu/SideMenu'
 import { getBoards } from '../services/boards'
 import { BoardModel } from '../model/BoardModel'
 

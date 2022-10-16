@@ -1,5 +1,5 @@
 import { styled, Avatar, Box } from '@mui/material';
-import { theme } from '../Theme';
+import { theme } from '../../../Theme';
 
 export const TaskCard = styled(Box)(({ theme }) => ({
   borderRadius: '8px', 

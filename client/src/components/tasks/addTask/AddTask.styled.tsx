@@ -1,5 +1,5 @@
 import { TextareaAutosize, styled } from '@mui/material';
-import { theme } from '../Theme';
+import { theme } from '../../../Theme';
 
 export const TaskInput = styled(TextareaAutosize)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
