@@ -15,3 +15,9 @@ export const addTask = async (task: Task) => {
   const res = await req;
   return res.status;
 }
+
+export const removeTask = async (id: string) => {
+  const req = axios.delete(`${baseURL}/api/tasks/${id}`);
+  const res = await req;
+  return res.status;
+}

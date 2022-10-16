@@ -93,6 +93,12 @@ app.put('/api/tasks/:id', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.delete('/api/tasks/:id', (req, res, next) => {
+  Task.findByIdAndRemove(req.params.id)
+    .then(_ => res.status(204).end())
+    .catch(err => next(err));
+})
+
 const unknownEndpoint = (req, res) => {
   res.status(404).send({ error: 'Unknown endpoint' });
 }
