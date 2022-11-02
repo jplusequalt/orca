@@ -17,7 +17,7 @@ mongoose.connect(url)
   .catch(error => console.log('error connecting to MongoDb: ', error));
   
 const buildBoard = tasks => {
-  let taskHeaders = ['Todo', 'Blocked', 'In Progress', 'Completed', 'Backlog'];
+  let taskHeaders = ['Todo', 'Blocked', 'In Progress', 'Completed'];
   let columns = taskHeaders.reduce((obj, keys) => (obj[keys] = [], obj), {});
   return tasks.reduce((cols, task) => {
     if (taskHeaders.includes(task.status)) {
@@ -48,7 +48,13 @@ app.post('/api/boards', (req, res, next) => {
   }).catch(err => next(err));
 });
 
-app.get('/api/board/:tag', (req, res) => {
+app.delete('/api/boards/:tag', (req, res, next) => {
+  Board.findOneAndRemove({ tag: req.params.tag })
+    .then(_ => res.status(204).end())
+    .catch(err => next(err));
+});
+
+app.get('/api/boards/:tag', (req, res) => {
   let boardTag = req.params.tag;
   Task.find({ board: boardTag }).then(tasks => {
     let cols = buildBoard(tasks);

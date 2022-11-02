@@ -26,14 +26,17 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:8080/api/boards/ HTTP/1.1
+POST http://localhost:8080/api/boards HTTP/1.1
 content-type: application/json
 
 {
-  "name": "Another board",
+  "name": "To be deleted",
   "users": ["JT", "Lily", "Patrick"],
-  "tag": "456"
+  "tag": "789"
 }
+
+###
+DELETE http://localhost:8080/api/boards/789
 
 ###
 GET http://localhost:8080/api/boards/

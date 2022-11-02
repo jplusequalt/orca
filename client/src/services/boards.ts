@@ -9,7 +9,7 @@ export const getBoards = async () => {
 }
 
 export const getColumns = async (boardTag: string) => {
-  const req = axios.get(`${baseURL}/api/board/${boardTag}`);
+  const req = axios.get(`${baseURL}/api/boards/${boardTag}`);
   const res = await req;
   return res.data;
 }

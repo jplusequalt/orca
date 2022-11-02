@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import { theme } from '../../Theme';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -7,6 +7,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ViewColumnIcon from '@mui/icons-material/ViewColumn';
 import { BoardMenuList } from './SideMenu.styled';
+import AddBoxSharp from '@mui/icons-material/AddBoxSharp';
 
 const drawerWidth = 200;
 
@@ -30,7 +31,6 @@ export const SideMenu: React.FC<SideMenuProps> = ({ visible, boards, selected, h
       <List>
         {boards.map(board => 
           <ListItem key={board}
-          
             sx={{
               '&:hover': {
                 backgroundColor: selected !== board ? '#232c3a' : theme.palette.background.paper
@@ -40,10 +40,14 @@ export const SideMenu: React.FC<SideMenuProps> = ({ visible, boards, selected, h
             onClick={() => handleSelect(board)}
             >
             <Box sx={{ 
-              backgroundColor: selected === board ? '#701b92' : 'transparent', 
+              backgroundColor: selected === board ? '#701b92' : 'transparent',
+              '&:hover': {
+                filter: selected === board ? 'brightness(1.1)' : 'none'
+              },
               borderRadius: '50px', 
               marginLeft: '-20px', 
-              width: '105%' }}>
+              width: '105%' 
+            }}>
               <ListItemButton
                 disableRipple
                 sx={{
@@ -65,6 +69,43 @@ export const SideMenu: React.FC<SideMenuProps> = ({ visible, boards, selected, h
             </Box>
           </ListItem>
         )}
+        <Divider sx={{ backgroundColor: theme.palette.text.primary, marginBottom: '1rem', marginTop: '1rem' }} />
+        <ListItem
+          sx={{
+            '&:hover': {
+              backgroundColor: '#232c3a'
+            },
+            padding: 0
+            
+         }}>
+          <Box sx={{ 
+              backgroundColor: 'transparent',
+              '&:hover': {
+                filter: 'none'
+              },
+              borderRadius: '50px', 
+              marginLeft: '-20px', 
+              width: '105%' 
+            }}>
+            <ListItemButton
+              sx={{
+                '&:hover': {
+                  backgroundColor: 'transparent'
+                }
+              }}>
+              <ListItemIcon
+                sx={{
+                    paddingLeft: '20px', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '0.5rem'
+                    }} >
+                <AddBoxSharp sx={{ fill: theme.palette.text.primary }}/>
+                <ListItemText primary={'Add new board'} sx={{ color: theme.palette.text.primary }} />
+              </ListItemIcon>
+            </ListItemButton>
+          </Box>
+        </ListItem>
       </List>
     </BoardMenuList>
   );
