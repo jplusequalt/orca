@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Box, Divider } from '@mui/material';
 import { theme } from '../../Theme';
 import List from '@mui/material/List';
@@ -8,6 +9,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ViewColumnIcon from '@mui/icons-material/ViewColumn';
 import { BoardMenuList } from './SideMenu.styled';
 import AddBoxSharp from '@mui/icons-material/AddBoxSharp';
+import { AddBoard } from '../board/addBoard/AddBoard';
 
 const drawerWidth = 200;
 
@@ -19,6 +21,8 @@ type SideMenuProps = {
 }
 
 export const SideMenu: React.FC<SideMenuProps> = ({ visible, boards, selected, handleSelect }) => {
+  
+  const [newBoard, setNewBoard] = useState<boolean>(false);
 
   return (
     <BoardMenuList
@@ -92,7 +96,9 @@ export const SideMenu: React.FC<SideMenuProps> = ({ visible, boards, selected, h
                 '&:hover': {
                   backgroundColor: 'transparent'
                 }
-              }}>
+              }}
+              onClick={() => setNewBoard(true)}
+              >
               <ListItemIcon
                 sx={{
                     paddingLeft: '20px', 
@@ -107,6 +113,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ visible, boards, selected, h
           </Box>
         </ListItem>
       </List>
+      { <AddBoard handleOpen={setNewBoard} open={newBoard} users={['JT', 'Lily', 'Patrick']} /> }
     </BoardMenuList>
   );
 }
