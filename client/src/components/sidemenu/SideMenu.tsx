@@ -10,6 +10,7 @@ import ViewColumnIcon from '@mui/icons-material/ViewColumn';
 import { BoardMenuList } from './SideMenu.styled';
 import AddBoxSharp from '@mui/icons-material/AddBoxSharp';
 import { AddBoard } from '../board/addBoard/AddBoard';
+import { BoardModel } from '../../model/BoardModel';
 
 const drawerWidth = 200;
 
@@ -17,10 +18,11 @@ type SideMenuProps = {
   visible: boolean,
   boards: string[],
   selected: string,
+  handleNewBoard: (board: BoardModel) => void, 
   handleSelect: (name: string) => void
 }
 
-export const SideMenu: React.FC<SideMenuProps> = ({ visible, boards, selected, handleSelect }) => {
+export const SideMenu: React.FC<SideMenuProps> = ({ visible, boards, selected, handleSelect, handleNewBoard }) => {
   
   const [newBoard, setNewBoard] = useState<boolean>(false);
 
@@ -113,7 +115,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ visible, boards, selected, h
           </Box>
         </ListItem>
       </List>
-      { <AddBoard handleOpen={setNewBoard} open={newBoard} users={['JT', 'Lily', 'Patrick']} /> }
+      { <AddBoard handleOpen={setNewBoard} open={newBoard} users={['JT', 'Lily', 'Patrick']} handleNewBoard={handleNewBoard} /> }
     </BoardMenuList>
   );
 }

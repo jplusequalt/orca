@@ -15,6 +15,8 @@ export const Main = () => {
   useEffect(() => {
     getBoards()
       .then(res => {
+        console.log(res);
+        
         let b = res.map((board: any) => 
           new BoardModel(board.name, board.tag, board.users));
         setBoards(b);
@@ -26,12 +28,16 @@ export const Main = () => {
     setBoard(boards.find(board => board.name === name) ?? boards[0]);
   }
 
+  const handleNewBoard = (board: BoardModel) => {
+    setBoards(boards.concat(board));
+  }
+
   return (
     <Box 
       sx={{ 
         display: 'flex'
     }}>
-      <SideMenu visible={sideMenuOpen} boards={boards.map(board => board.name)} selected={board.name} handleSelect={selectBoard} />
+      <SideMenu visible={sideMenuOpen} boards={boards.map(board => board.name)} handleNewBoard={handleNewBoard} selected={board.name} handleSelect={selectBoard} />
       <TaskProvider>
         <Board sideMenuToggle={setSideMenuOpen} sideMenuOpen={sideMenuOpen} boardInfo={board && board} />
       </TaskProvider>
