@@ -15,8 +15,6 @@ export const Main = () => {
   useEffect(() => {
     getBoards()
       .then(res => {
-        console.log(res);
-        
         let b = res.map((board: any) => 
           new BoardModel(board.name, board.tag, board.users));
         setBoards(b);
